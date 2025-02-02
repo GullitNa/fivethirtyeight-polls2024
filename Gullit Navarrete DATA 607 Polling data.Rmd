@@ -1,0 +1,50 @@
+---
+title: "DATA 607 Week 1"
+author: "Gullit Navarrete"
+date: "2/2/2025"
+output: openintro::lab_report
+---
+
+```{r load-packages, echo=TRUE, message=FALSE}
+library(tidyverse)
+library(openintro)
+library(readr)
+```
+
+### INTRODUCTION
+
+For this assignment, we are tasked to find a dataset from the fivethirtyeight website. I went ahead and downloaded the latest polls from the 2024 Presidential general election polls. Afterwards, I uploaded the raw csv file into the Github repository for open-access.
+```{r loading-data, echo=TRUE}
+polls_data <- read_csv("https://raw.githubusercontent.com/GullitNa/fivethirtyeight-polls2024/main/president_polls.csv")
+head(polls_data)
+```
+
+### DATA CLEANING
+
+Within the data, there are lots of columns that either have "N/A" or 0 values that are basically unavailable data taking up space. Additionally for data clarity as stated in step 1, I will also capitalize all necessary columns and/or abbreviate. I clean this out using the following code:
+```{r data-cleaning, echo=TRUE}
+cleaned_data <- polls_data %>%
+  drop_na() %>%
+  select(-seat_number) %>%
+  rename(
+    Poll_ID = poll_id,
+    Pollster_ID = pollster_id,
+    Pollster_Name = pollster,
+    Sponsor_IDs = sponsor_ids,
+    Sponsors = sponsors,
+    Pollster_Rating_ID = pollster_rating_id,
+    Pollster_Rating_Name = pollster_rating_name,
+    Pollster_Numeric_Grade = numeric_grade,
+    Poll_Score = pollscore,
+    Methodology = methodology,
+    Transparency_Score = transparency_score,
+    State = state
+  )
+```
+
+### CONCLUSION
+
+For the sake of cleaning, I did remove all the unavailable information in this dataset. However, I would extend the selected article by filling in these invalid data spaces with the required information for it's completion. To verify this article, it is possible to technically independently search for each of the columns missing values via the previous information given such as the poll ID for example.
+```{r conclusion, echo=TRUE}
+glimpse(cleaned_data)
+```
